@@ -1,3 +1,7 @@
+# Environment variables
+REGION=europe-west1
+ZONE=europe-west1-b
+
 # Enable APIs
 gcloud services enable aiplatform.googleapis.com  # Vertex AI API
 gcloud services enable notebooks.googleapis.com  # Notebooks API
@@ -8,14 +12,14 @@ gcloud compute networks create default  # network named 'default'
 # Create router (for the NAT gateway)
 gcloud compute routers create my-router \
     --network=default \
-    --region=europe-west1
+    --region=$REGION
 
 # Create NAT gateway
 gcloud compute routers nats create my-nat-gateway \
     --router=my-router \
     --auto-allocate-nat-external-ips \
     --nat-all-subnet-ip-ranges \
-    --region=europe-west1
+    --region=$REGION
 
 # Create notebook
 
@@ -32,9 +36,9 @@ gcloud compute instances create my-notebook \
     --metadata="proxy-mode=service_account" \
     --scopes=https://www.googleapis.com/auth/cloud-platform \
     --shielded-secure-boot \
-    --zone=europe-west1-b \
+    --zone=$ZONE \
     --no-address \
     --machine-type=n1-standard-4
 
 gcloud notebooks instances register my-notebook \
-    --location=europe-west1-b
+    --location=$ZONE
