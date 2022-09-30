@@ -21,6 +21,11 @@ gcloud compute routers nats create my-nat-gateway \
     --nat-all-subnet-ip-ranges \
     --region=$REGION
 
+# Create service account
+gcloud iam service-accounts create sa-vertex \
+    --display-name="Service account for testing Vertex AI" \
+    --role="roles/storage.admin"  # https://cloud.google.com/storage/docs/access-control/iam-roles
+
 # Create notebook
 
 # In case of creating the notebook in the console - because of the organization policy, make sure to:
