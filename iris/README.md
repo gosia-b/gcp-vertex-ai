@@ -1,3 +1,5 @@
+# 🌷 iris classification
+
 `1_iris_export.ipynb`  
 - train a model and export it as a .pkl file
 - also: make predictions using the .pkl file
