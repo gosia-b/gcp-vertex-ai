@@ -17,5 +17,8 @@ The use case is implemented using 4 pipeline *components*:
 Each pipeline component uses a container image available on the *Artifact Registry*.  
 In this case, we use only *pre-built* Docker images ([list of pre-built containers for prediction](https://cloud.google.com/vertex-ai/docs/predictions/pre-built-containers)).
 
+❗ Vertex Pipelines supports running pipelines built with both *Kubeflow Pipelines* or *TFX* (Tensorflow Extended).  
+Here we use Kubeflow Pipelines.
+
 ## Reference
 [Article about Vertex AI Pipelines](https://towardsdatascience.com/how-to-set-up-custom-vertex-ai-pipelines-step-by-step-467487f81cad)
