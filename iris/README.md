@@ -38,3 +38,6 @@ Batch predictions are done for 3 files:
 - online predictions using Endpoint
 - batch predictions
 
+## Reference
+[Online predictions](https://cloud.google.com/vertex-ai/docs/predictions/online-predictions-custom-models)  
+[Batch predictions](https://cloud.google.com/vertex-ai/docs/predictions/batch-predictions)
