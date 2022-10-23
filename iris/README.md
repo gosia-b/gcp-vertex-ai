@@ -13,7 +13,18 @@ And the output can be:
 - 1 - Iris-Versicolour
 - 2 - Iris-Virginica
 
-## Files
+## Overview
+The notebooks are run in Vertex AI Workbench.  
+They upload a model to Model Registry, deploy it to Endpoint (for online preditions) and create Batch predictions.  
+Files are stored in Cloud Storage.
+
+<img src="https://github.com/gosia-b/gcp-vertex-ai/blob/master/iris/images/architecture.png" width=90%>
+
+Batch predictions are done for 3 files:
+
+<img src="https://github.com/gosia-b/gcp-vertex-ai/blob/master/iris/images/batch.png" width=70%>
+
+## Notebooks
 
 `1_iris_export.ipynb`  
 - train a model and export it as a .pkl file
@@ -26,3 +37,7 @@ And the output can be:
 `3_iris_use.ipynb`
 - online predictions using Endpoint
 - batch predictions
+
+## Reference
+[Online predictions](https://cloud.google.com/vertex-ai/docs/predictions/online-predictions-custom-models)  
+[Batch predictions](https://cloud.google.com/vertex-ai/docs/predictions/batch-predictions)
