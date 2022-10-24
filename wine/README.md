@@ -20,7 +20,7 @@ In this case, we use only *pre-built* Docker images ([list of pre-built containe
 ❗ Vertex Pipelines supports running pipelines built with both *Kubeflow Pipelines* or *TFX* (Tensorflow Extended).  
 Here we use Kubeflow Pipelines.
 
-## 1️⃣ component: get_wine_data
+## 1️⃣ Load data
 The first component is `get_wine_data`.  
 It uses a pre-built Python 3.9 base image in which we additionally add pandas, sklearn, and pyarrow.
 
@@ -45,16 +45,12 @@ def get_wine_data(
     from sklearn.model_selection import train_test_split
     
     df_wine = pd.read_csv(url, delimiter=";")
-    df_wine["best_quality"] = [ 1 if x>=7 else 0 for x in df_wine.quality] 
-    df_wine["target"] = df_wine.best_quality
-    df_wine = df_wine.drop(["quality", "total sulfur dioxide", "best_quality"], axis=1)
-    
-    train, test = train_test_split(df_wine, test_size=0.3)
+    ...
     train.to_csv(dataset_train.path + ".csv" , index=False, encoding="utf-8-sig")
     test.to_csv(dataset_test.path + ".csv" , index=False, encoding="utf-8-sig")
 ```
 
-## 2️⃣ component: train_winequality
+## 2️⃣ Train model
 
 ## Reference
 [Article about Vertex AI Pipelines](https://towardsdatascience.com/how-to-set-up-custom-vertex-ai-pipelines-step-by-step-467487f81cad)
