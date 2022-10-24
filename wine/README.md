@@ -9,10 +9,10 @@ The target to be predicted is based on the quality grade of the wine:
 
 ## Pipeline
 The use case is implemented using 4 pipeline *components*:
-1. Data prep
-2. Train
-3. Evaluation
-4. Deploy
+1. Load data
+2. Train model
+3. Evaluate model
+4. Deploy model
 
 Each pipeline component uses a container image available on the *Artifact Registry*.  
 In this case, we use only *pre-built* Docker images ([list of pre-built containers for prediction](https://cloud.google.com/vertex-ai/docs/predictions/pre-built-containers)).
