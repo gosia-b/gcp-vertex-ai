@@ -12,7 +12,7 @@ terraform init
 terraform apply
 ```
 
-# Way 2 - using a Bash script
+# Way 2 - using gcloud
 In Cloud Shell, execute the following command:
 ```bash
 bash create_notebooh.sh
