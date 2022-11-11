@@ -1,6 +1,10 @@
 # 👾 terraform
 
 # Overview
+```bash
+mkdir tf-example && cd tf-example
+nano main.tf
+```
 
 
 # Reference
