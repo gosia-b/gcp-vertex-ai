@@ -1,4 +1,4 @@
-# 👾 terraform
+# 👾 terraform or gcloud
 
 Create a user-managed notebooks instance on GCP in one of 2 ways:
 
