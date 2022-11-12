@@ -1,3 +1,9 @@
+variable "project" {
+  type = string
+  description = "Google Cloud Project ID"
+}
+
+# Create VPN network and subnetwork
 resource "google_compute_network" "net" {
   name = "my-vpc-network"
   auto_create_subnetworks = false
@@ -11,6 +17,7 @@ resource "google_compute_subnetwork" "subnet" {
   network = google_compute_network.net.id
 }
 
+# Create Cloud NAT and a router
 resource "google_compute_router" "router" {
   name = "my-router"
   region = google_compute_subnetwork.subnet.region
@@ -25,6 +32,19 @@ resource "google_compute_router_nat" "nat" {
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
 }
 
+# Create a service account and give it necessary permissions
+resource "google_service_account" "workbench-default" {
+  account_id = "workbench-default"
+  display_name = "Default service account for Vertex AI Workbench"
+}
+
+resource "google_project_iam_binding" "workbench-default-storage-object-admin" {
+  project = var.project
+  role = "roles/storage.admin"
+  members = ["serviceAccount:${google_service_account.workbench-default.email}"]
+}
+
+# Create the notebook
 resource "google_notebooks_instance" "test-notebook" {
   name = "test-notebook"
   location = "europe-west1-b"
@@ -34,6 +54,8 @@ resource "google_notebooks_instance" "test-notebook" {
     project = "deeplearning-platform-release"
     image_family = "common-cpu-notebooks"
   }
+
+  service_account = google_service_account.workbench-default.email
 
   no_public_ip = true
 
