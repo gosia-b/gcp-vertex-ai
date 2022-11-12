@@ -3,13 +3,13 @@
 Create a user-managed notebooks instance on GCP in one of 2 ways:
 
 # Way 1 - using Terraform
-In Cloud Shell, execute the following commands:
+In Cloud Shell, execute the following commands (replace MY-PROJECT-NAME):
 ```bash
 mkdir tf-example
 cd tf-example
 nano main.tf  # then paste the file content
 terraform init
-terraform apply
+terraform apply -var project=MY-PROJECT-NAME
 ```
 
 # Way 2 - using gcloud
