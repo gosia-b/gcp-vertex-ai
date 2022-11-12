@@ -34,7 +34,7 @@ All arguments are optional so you can use the decorator without any arguments:
 def ...
 ```
 
-# Define pipeline
+# Define the pipeline
 By evaluating the components definitions above, you've created *task factory functions* that are used in the pipeline definition to create the pipeline steps.  
 This pipeline takes an *input parameter* and passes it as an argument to the first 2 pipeline steps (`hw_task` and `two_outputs_task`).  
 The third pipeline step (`consumer_task`) consumes the outputs of those 2 steps.
@@ -53,6 +53,24 @@ def pipeline(text: str = "hi there"):
         two_outputs_task.outputs["output_two"]
     )
 ```
+
+# Compile the pipeline
+```python
+compiler.Compiler().compile(pipeline_func=pipeline, package_path="simple_pipeline.json")
+```
+
+# Run the pipeline
+```python
+job = aip.PipelineJob(
+    display_name=PIPELINE_DISPLAY_NAME,
+    template_path="simple_pipeline.json",
+    pipeline_root=PIPELINE_ROOT,
+    location=REGION
+)
+
+job.run(service_account=SERVICE_ACCOUNT)
+```
+Click on the generated link to see your run in the Cloud Console.
 
 # Reference
 [Notebook](https://github.com/GoogleCloudPlatform/vertex-ai-samples/blob/main/notebooks/official/pipelines/pipelines_intro_kfp.ipynb)  
