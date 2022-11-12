@@ -10,7 +10,7 @@ This notebook is an introduction to using Vertex AI Pipelines with the Kubeflow 
 We define and compile a Vertex AI Pipeline.  
 Our pipeline has 3 steps, where each step is defined as a component.
 
-# Pipeline components
+# Define pipeline components
 
 Each component is defined using a `@component` decorator which compiles the function to a KFP component when evaluated.  
 We can specify a base image to use for the component (the default base image is `python:3.7`)  
@@ -32,6 +32,26 @@ All arguments are optional so you can use the decorator without any arguments:
 ```python
 @component
 def ...
+```
+
+# Define pipeline
+By evaluating the components definitions above, you've created *task factory functions* that are used in the pipeline definition to create the pipeline steps.  
+This pipeline takes an *input parameter* and passes it as an argument to the first 2 pipeline steps (`hw_task` and `two_outputs_task`).  
+The third pipeline step (`consumer_task`) consumes the outputs of those 2 steps.
+```python
+@dsl.pipeline(
+    name="hello-world-pipeline",
+    description="A simple pipeline",
+    pipeline_root=PIPELINE_ROOT
+)
+def pipeline(text: str = "hi there"):
+    hw_task = hello_world(text)
+    two_outputs_task = two_outputs(text)
+    consumer_task = cosumer(
+        hw_task.output,
+        two_outputs_task.outputs["output_one"],
+        two_outputs_task.outputs["output_two"]
+    )
 ```
 
 # Reference
