@@ -44,6 +44,29 @@ resource "google_project_iam_binding" "workbench-default-storage-object-admin" {
   members = ["serviceAccount:${google_service_account.workbench-default.email}"]
 }
 
+resource "google_project_iam_binding" "workbench-default-aiplatform-user" {
+  project = var.project
+  role = "roles/aiplatform.user"
+  members = ["serviceAccount:${google_service_account.workbench-default.email}"]
+}
+
+
+# A weird thing I added because of an error:
+# "you do not have permission to act as service_account ..."
+resource "google_project_iam_binding" "workbench-default-iam-service-account-user" {
+  project = var.project
+  role = "roles/iam.serviceAccountUser"
+  members = ["serviceAccount:${google_service_account.workbench-default.email}"]
+}
+
+# gcloud iam service-accounts add-iam-policy-binding \
+#     ${PROJECT_ID}@appspot.gserviceaccount.com \
+#     --member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
+#     --role=roles/iam.serviceAccountUser \
+#     --project=${PROJECT_ID}
+
+
+
 # Create the notebook
 resource "google_notebooks_instance" "test-notebook" {
   name = "test-notebook"
@@ -65,4 +88,10 @@ resource "google_notebooks_instance" "test-notebook" {
 
   network = google_compute_network.net.id
   subnet = google_compute_subnetwork.subnet.id
+}
+
+# Enable Vertex AI API
+resource "google_project_service" "project" {
+  project = var.project
+  service = "aiplatform.googleapis.com"
 }
