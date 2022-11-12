@@ -70,7 +70,10 @@ job = aip.PipelineJob(
 
 job.run(service_account=SERVICE_ACCOUNT)
 ```
-Click on the generated link to see your run in the Cloud Console.
+Click on the generated link to see your run in the Cloud Console.  
+
+
+<img src="https://raw.githubusercontent.com/gosia-b/gcp-vertex-ai/master/2_pipeline/pipeline.png">
 
 # Reference
 [Notebook](https://github.com/GoogleCloudPlatform/vertex-ai-samples/blob/main/notebooks/official/pipelines/pipelines_intro_kfp.ipynb)  
