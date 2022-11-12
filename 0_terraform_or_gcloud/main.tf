@@ -59,14 +59,6 @@ resource "google_project_iam_binding" "workbench-default-iam-service-account-use
   members = ["serviceAccount:${google_service_account.workbench-default.email}"]
 }
 
-# gcloud iam service-accounts add-iam-policy-binding \
-#     ${PROJECT_ID}@appspot.gserviceaccount.com \
-#     --member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
-#     --role=roles/iam.serviceAccountUser \
-#     --project=${PROJECT_ID}
-
-
-
 # Create the notebook
 resource "google_notebooks_instance" "test-notebook" {
   name = "test-notebook"
@@ -91,7 +83,7 @@ resource "google_notebooks_instance" "test-notebook" {
 }
 
 # Enable Vertex AI API
-resource "google_project_service" "project" {
+resource "google_project_service" "aiplatform" {
   project = var.project
   service = "aiplatform.googleapis.com"
 }
