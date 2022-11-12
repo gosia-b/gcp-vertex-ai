@@ -50,7 +50,6 @@ resource "google_project_iam_binding" "workbench-default-aiplatform-user" {
   members = ["serviceAccount:${google_service_account.workbench-default.email}"]
 }
 
-
 # A weird thing I added because of an error:
 # "you do not have permission to act as service_account ..."
 resource "google_project_iam_binding" "workbench-default-iam-service-account-user" {
