@@ -1,4 +1,4 @@
-# 🔧 pipeline
+# 🔧 simple pipeline
 
 # Vertex AI Pipelines
 Compared to other cloud providers, Google has made a decision not to develop product-specific pipelines (such as AWS Sagemaker) but to instead rely on the open source technologies. So two formats are supported:
