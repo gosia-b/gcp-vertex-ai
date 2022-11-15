@@ -7,16 +7,16 @@ Our pipeline has 3 steps, where each step is defined as a component.
 
 # Define pipeline components
 
-Each component is defined using a `@component` decorator which compiles the function to a KFP component when evaluated.  
-We can specify a base image to use for the component (the default base image is `python:3.7`)  
-We can specify a component YAML file - the compiled component specification is written to this file.  
-
 ```python
 @component(output_component_file="hw.yaml", base_image="python:3.9")
 def hello_world(text: str) -> str:
     print(text)
     return text
 ```
+
+- The `@component` decorator compiles a function to a component when the pipeline is run.
+- The `base_image` parameter specifies the container image this component will use (the default base image is `python:3.7`).
+- The `output_component_file` parameter specifies the yaml file to write the compiled component to. After running the cell you should see that file written to your notebook instance. If you wanted to share this component with someone, you could send them the generated yaml file and have them load it with `dataset_component = kfp.components.load_component_from_file('./hw.yaml')`.
 
 We can provide a list of packages to install before executing the component:
 ```python
