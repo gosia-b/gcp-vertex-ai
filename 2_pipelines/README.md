@@ -11,5 +11,8 @@ Imagine you're building an ML workflow that includes processing data, training a
 
 TLDR: pipelines help you automate and reproduce your ML workflow.
 
+# Miscellaneous
+`PIPELINE_ROOT` is the Cloud Storage path where the artifacts created by our pipeline will be written.
+
 # Reference
 [Codelabs](https://codelabs.developers.google.com/vertex-mlmd-pipelines)
