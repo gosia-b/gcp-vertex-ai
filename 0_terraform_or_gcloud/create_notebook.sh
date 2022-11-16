@@ -6,8 +6,8 @@
 # Environment variables
 REGION=europe-west1
 ZONE=europe-west1-b
-PROJECT_ID=cloud4us-gcp-i67w0t0rvc5d3ufap
-SERVICE_ACCOUNT=sa-vertex  # name of the service account to be created
+PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+SERVICE_ACCOUNT=workbench-default  # name of the service account to be created
 
 gcloud config set project $PROJECT_ID
 
@@ -24,20 +24,30 @@ gcloud compute routers create my-router \
     --region=$REGION
 
 # Create NAT gateway
-gcloud compute routers nats create my-nat-gateway \
+gcloud compute routers nats create my-router-nat \
     --router=my-router \
     --auto-allocate-nat-external-ips \
     --nat-all-subnet-ip-ranges \
     --region=$REGION
 
-# Create a service account
+# Create a service account and give it necessary permissions
 gcloud iam service-accounts create $SERVICE_ACCOUNT \
-    --display-name="Service account for testing Vertex AI"
+    --display-name="Default service account for Vertex AI Workbench"
 
-# Grant the service account an IAM role on the project
+# Permissions to Cloud Storage
 gcloud projects add-iam-policy-binding $PROJECT_ID \
     --member="serviceAccount:$SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com" \
-    --role="roles/storage.admin"  # https://cloud.google.com/storage/docs/access-control/iam-roles
+    --role="roles/storage.admin"
+
+# Permissions to Vertex AI
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:$SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com" \
+    --role="roles/ml.admin"
+
+# Permissions to BigQuery
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:$SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com" \
+    --role="roles/bigquery.admin"
 
 # In case of creating the notebook in the console - because of the organization policy, make sure to:
 # - check "Turn on Secure Boot"
