@@ -38,7 +38,7 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 # Permissions to Vertex AI
 gcloud projects add-iam-policy-binding $PROJECT_ID \
     --member="serviceAccount:$SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com" \
-    --role="roles/ml.admin"
+    --role="roles/aiplatform.admin"
 
 # Permissions to BigQuery
 gcloud projects add-iam-policy-binding $PROJECT_ID \
@@ -65,3 +65,13 @@ gcloud compute instances create my-notebook \
 
 gcloud notebooks instances register my-notebook \
     --location=$ZONE
+
+# Give compute service account admin permissions for Vertex AI
+# (because Vertex Pipelines by default are run by the compute service account)
+gcloud projects describe $PROJECT_ID > project-info.txt
+PROJECT_NUM=$(cat project-info.txt | sed -nre 's:.*projectNumber\: (.*):\1:p')
+COMPUTE_SERVICE_ACCOUNT="${PROJECT_NUM//\'/}-compute@developer.gserviceaccount.com"
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:$COMPUTE_SERVICE_ACCOUNT" \
+    --role="roles/aiplatform.admin"
+rm project-info.txt
