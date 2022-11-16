@@ -38,15 +38,24 @@ resource "google_service_account" "workbench-default" {
   display_name = "Default service account for Vertex AI Workbench"
 }
 
+# Permissions to Cloud Storage
 resource "google_project_iam_binding" "workbench-default-storage-object-admin" {
   project = var.project
   role = "roles/storage.admin"
   members = ["serviceAccount:${google_service_account.workbench-default.email}"]
 }
 
+# Permissions to Vertex AI
 resource "google_project_iam_binding" "workbench-default-aiplatform-user" {
   project = var.project
-  role = "roles/aiplatform.user"
+  role = "roles/ml.admin"
+  members = ["serviceAccount:${google_service_account.workbench-default.email}"]
+}
+
+# Permissions to BigQuery
+resource "google_project_iam_binding" "workbench-default-bigquery-admin" {
+  project = var.project
+  role = "roles/bigquery.admin"
   members = ["serviceAccount:${google_service_account.workbench-default.email}"]
 }
 
