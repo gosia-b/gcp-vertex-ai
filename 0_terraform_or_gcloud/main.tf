@@ -68,8 +68,8 @@ resource "google_project_iam_binding" "workbench-default-iam-service-account-use
 }
 
 # Create the notebook
-resource "google_notebooks_instance" "test-notebook" {
-  name = "test-notebook"
+resource "google_notebooks_instance" "my-notebook" {
+  name = "my-notebook"
   location = "europe-west1-b"
   machine_type = "n1-standard-1"
 
