@@ -1,8 +1,3 @@
-# IMPORTANT: this code finally didn't work - notebooks instance was "creating" endlessly.
-# What might have helped:
-# 1) Troubleshooting: click name of the notebook, then "Health" and follow the documentation for the "Unhealthy" part
-# 2) Stop and resume the VM (in Compute Engine)
-
 # Environment variables
 REGION=europe-west1
 ZONE=europe-west1-b
