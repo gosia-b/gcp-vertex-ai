@@ -9,7 +9,7 @@ mkdir tf
 cd tf
 nano main.tf  # then paste the file content
 terraform init
-terraform apply -var project=MY-PROJECT-NAME
+terraform apply -var project=MY-PROJECT-ID
 ```
 
 # Way 2 - using gcloud
