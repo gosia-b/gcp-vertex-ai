@@ -7,8 +7,9 @@ SERVICE_ACCOUNT=workbench-default  # name of the service account to be created
 gcloud config set project $PROJECT_ID
 
 # Enable APIs
-gcloud services enable aiplatform.googleapis.com  # Vertex AI API
-gcloud services enable notebooks.googleapis.com  # Notebooks API
+gcloud services enable aiplatform.googleapis.com
+gcloud services enable notebooks.googleapis.com
+gcloud services enable bigquery.googleapis.com
 
 # Create VPC network
 gcloud compute networks create default  # network named 'default'
