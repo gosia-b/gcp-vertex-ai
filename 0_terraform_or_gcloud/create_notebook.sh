@@ -45,6 +45,12 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
     --member="serviceAccount:$SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com" \
     --role="roles/bigquery.admin"
 
+# A weird thing I added because of an error:
+# "you do not have permission to act as service_account ..."
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:$SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com" \
+    --role="roles/iam.serviceAccountUser"
+
 # In case of creating the notebook in the console - because of the organization policy, make sure to:
 # - check "Turn on Secure Boot"
 # - uncheck "Enable external IP address"
