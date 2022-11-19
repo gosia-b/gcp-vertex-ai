@@ -19,5 +19,7 @@ We define a 3-step pipeline with the following custom components:
 - `train_model`: Train a Scikit-learn model and export it along with a `Metrics` artifact 🏆 that includes our model's accuracy, framework, and size of the dataset used to train it
 - `deploy_model`: Deploy the exported model to an endpoint in Vertex AI. It returns the URIs to both the model and endpoint resources as artifacts 🏆
 
+<img src="https://raw.githubusercontent.com/gosia-b/gcp-vertex-ai/master/2_pipelines/1_with_artifacts/images/pipeline.png" width=30%>
+
 # Reference
 [Codelabs](https://codelabs.developers.google.com/vertex-mlmd-pipelines)
