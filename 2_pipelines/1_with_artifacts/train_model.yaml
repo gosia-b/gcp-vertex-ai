@@ -1,0 +1,62 @@
+name: Train model
+inputs:
+- {name: dataset, type: Dataset}
+outputs:
+- {name: metrics, type: Metrics}
+- {name: model, type: Model}
+implementation:
+  container:
+    image: python:3.9
+    command:
+    - sh
+    - -c
+    - |2
+
+      if ! [ -x "$(command -v pip)" ]; then
+          python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip
+      fi
+
+      PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet     --no-warn-script-location 'scikit-learn' 'pandas' 'joblib' 'db-dtypes' 'kfp==1.8.9' && "$0" "$@"
+    - sh
+    - -ec
+    - |
+      program_path=$(mktemp -d)
+      printf "%s" "$0" > "$program_path/ephemeral_component.py"
+      python3 -m kfp.v2.components.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+    - |2+
+
+      import kfp
+      from kfp.v2 import dsl
+      from kfp.v2.dsl import *
+      from typing import *
+
+      def train_model(
+          dataset: Input[Dataset],
+          metrics: Output[Metrics],
+          model: Output[Model]
+      ):
+          from joblib import dump
+          import pandas as pd
+          from sklearn.model_selection import train_test_split
+          from sklearn.tree import DecisionTreeClassifier
+
+          df = pd.read_csv(dataset.path)
+          labels = df.pop("Class").tolist()
+          data = df.values.tolist()
+          x_train, x_test, y_train, y_test = train_test_split(data, labels)
+          classifier = DecisionTreeClassifier()
+          classifier.fit(x_train, y_train)
+          score = classifier.score(x_test, y_test)
+          print("accuracy is:", score)
+
+          metrics.log_metric("accuracy", (score * 100.0))
+          metrics.log_metric("framework", "Scikit-learn")
+          metrics.log_metric("dataset_size", len(df))
+
+          dump(classifier, model.path + ".joblib")
+
+    args:
+    - --executor_input
+    - {executorInput: null}
+    - --function_to_execute
+    - train_model
