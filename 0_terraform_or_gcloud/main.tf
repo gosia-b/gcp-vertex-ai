@@ -3,6 +3,21 @@ variable "project" {
   description = "Google Cloud Project ID"
 }
 
+variable "apis_list" {
+  type = list(string)
+  default = [
+    "compute.googleapis.com",
+    "aiplatform.googleapis.com"
+  ]
+}
+
+# Enable APIs
+resource "google_project_service" "apis" {
+  for_each = toset(var.apis_list)
+  project = var.project
+  service = each.key
+}
+
 # Create VPN network and subnetwork
 resource "google_compute_network" "net" {
   name = "my-vpc-network"
@@ -88,10 +103,4 @@ resource "google_notebooks_instance" "my-notebook" {
 
   network = google_compute_network.net.id
   subnet = google_compute_subnetwork.subnet.id
-}
-
-# Enable Vertex AI API
-resource "google_project_service" "aiplatform" {
-  project = var.project
-  service = "aiplatform.googleapis.com"
 }
