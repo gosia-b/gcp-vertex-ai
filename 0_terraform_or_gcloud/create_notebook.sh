@@ -10,6 +10,7 @@ gcloud config set project $PROJECT_ID
 gcloud services enable aiplatform.googleapis.com
 gcloud services enable notebooks.googleapis.com
 gcloud services enable bigquery.googleapis.com
+gcloud services enable compute.googleapis.com
 
 # Create VPC network
 gcloud compute networks create default  # network named 'default'
